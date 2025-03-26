@@ -45,6 +45,7 @@ class CMakeBuild(build_ext):
         # CMake lets you override the generator - we need to check this.
         # Can be set with Conda-Build, for example.
         cmake_generator = os.environ.get("CMAKE_GENERATOR", "")
+        cmake_generator = "Visual Studio 17 2022"
 
         # Set Python_EXECUTABLE instead if you use PYBIND11_FINDPYTHON
         # EXAMPLE_VERSION_INFO shows you how to pass a value into the C++ code
@@ -92,7 +93,8 @@ class CMakeBuild(build_ext):
             # contain a backward-compatibility arch spec already in the
             # generator name.
             if not single_config and not contains_arch:
-                cmake_args += ["-A", PLAT_TO_CMAKE[self.plat_name]]
+                # cmake_args += ["-A", PLAT_TO_CMAKE[self.plat_name]]
+                cmake_args += ["-G", f"{cmake_generator}"]
 
             # Multi-config generators have a different way to specify configs
             if not single_config:
